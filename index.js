@@ -8,10 +8,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect("mongodb://127.0.0.1:27017/employee");
+mongoose.connect("mongodb+srv://viktoryaremenko92:96hJIR1L0MTVaUQq@cluster0.l73txlm.mongodb.net/employee");
 
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
+  res.send({email:`Welcome ${email}!`});
   EmployeeModel.findOne({ email: email }).then((user) => {
     if (user) {
       if (user.password === password) {
@@ -30,7 +31,10 @@ app.post("/register", (req, res) => {
     .then((employees) => res.json(employees))
     .catch((err) => res.json(err));
 });
-
+app.post('/test', (req, res)=>{
+  const name = req.query;
+  res.send({msg:`Welcome ${name}!`});
+})
 // app.listen(3001, () => {
 //   console.log("port running");
 // });
